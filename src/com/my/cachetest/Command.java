@@ -1,6 +1,8 @@
 package com.my.cachetest;
 
-enum Type {PUT_OBJECT, GET_OBJECT, UPDATE_OBJECT, DELETE_OBJECT, EXIT};
+import java.util.regex.Pattern;
+
+enum Type {PUT_OBJECT, GET_OBJECT, UPDATE_OBJECT, DELETE_OBJECT, EXIT, HELP};
 
 public class Command {
 	private Type type;
@@ -9,7 +11,7 @@ public class Command {
 	
 	public void read(String input) {
 		String[] chars = input.split(" ");
-		if(chars.length < 2) {
+		if(chars.length <= 0) {
 			return;
 		}
 		if(chars[0].startsWith("put")) {
@@ -22,16 +24,19 @@ public class Command {
 			type =  Type.DELETE_OBJECT;
 		} else if(chars[0].startsWith("exit")) {
 			type =  Type.EXIT;
+		} else if(chars[0].startsWith("help")) {
+			type =  Type.HELP;
+		} else {
+			return;
 		}
 		
-		key = chars[1];
+		if(chars.length > 1) {
+			key = chars[1];
+		} 
 		
 		if(chars.length > 2) {
 			value = chars[2];
-		} else {
-			value = null;
 		}
-		
 	}
 
 	public Type getType() {
