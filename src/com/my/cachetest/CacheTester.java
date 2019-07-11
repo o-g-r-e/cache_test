@@ -12,7 +12,7 @@ public class CacheTester {
 		this.cache = cache;
 	}
 	
-	public void runCommandLineTester() throws CahceOverfullException {
+	public void runCommandLineTester() {
 		boolean exit = false;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Welcome to cache testing.");
@@ -42,10 +42,14 @@ public class CacheTester {
 		return inputValue.trim().replaceAll("\\s{2,}", " ");
 	}
 	
-	private void commandProcessor(Command com, TwoLevelCache<String, String> cache) throws CahceOverfullException {
+	private void commandProcessor(Command com, TwoLevelCache<String, String> cache) {
 		switch (com.getType()) {
 		case PUT_OBJECT:
-			cache.put(com.getKey(), com.getValue());
+			try {
+				cache.put(com.getKey(), com.getValue());
+			} catch (CahceOverfullException e) {
+				System.out.println("Failed to put object. File cache is full!");
+			}
 			break;
 		case GET_OBJECT:
 			cache.get(com.getKey());
@@ -58,6 +62,8 @@ public class CacheTester {
 			break;
 		case HELP:
 			System.out.println(getHelp());
+			break;
+		default:
 			break;
 		}
 	}
@@ -95,6 +101,8 @@ public class CacheTester {
 			if(com.getKey() == null) {
 				return false;
 			}
+			break;
+		default:
 			break;
 		}
 		

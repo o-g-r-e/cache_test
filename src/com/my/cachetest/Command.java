@@ -1,7 +1,5 @@
 package com.my.cachetest;
 
-import java.util.regex.Pattern;
-
 enum Type {PUT_OBJECT, GET_OBJECT, UPDATE_OBJECT, DELETE_OBJECT, EXIT, HELP};
 
 public class Command {
@@ -50,6 +48,5 @@ public class Command {
 	public String getValue() {
 		return value;
 	}
-	
 	
 }
